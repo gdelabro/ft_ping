@@ -6,14 +6,14 @@
 #    By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/23 19:47:08 by gdelabro          #+#    #+#              #
-#    Updated: 2020/10/23 19:47:34 by gdelabro         ###   ########.fr        #
+#    Updated: 2020/10/26 18:42:08 by gdelabro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ping
 
 SRC_PATH = src
-SRC_NAME = main.c
+SRC_NAME = main.c time_functions.c get_ipv4.c parser.c ping.c stat.c
 
 OBJ_PATH = obj
 OBJ_NAME = $(SRC_NAME:.c=.o)
