@@ -6,33 +6,33 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 23:27:28 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/10/27 18:57:00 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/01 19:26:09 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ping.h"
 
-int		check_opt(t_ping *host_opt, char **opt, int *i)
+int		check_opt(char **opt, int *i)
 {
 	int i2;
 
 	i2 = 0;
 	if (!ft_strcmp(opt[*i], "-t") && opt[*i + 1])
 	{
-		host_opt->ttl = ft_atoi(opt[*i + 1]);
+		ping_s.ttl = ft_atoi(opt[*i + 1]);
 		*i += 1;
 		return (0);
 	}
 	if (!ft_strcmp(opt[*i], "-W") && opt[*i + 1])
 	{
-		host_opt->timeout.tv_sec = ft_atoi(opt[*i + 1]);
+		ping_s.timeout.tv_sec = ft_atoi(opt[*i + 1]);
 		*i += 1;
 		return (0);
 	}
 	while (opt[*i][++i2])
 	{
 		if (opt[*i][i2] == 'v')
-			host_opt->v = 1;
+			ping_s.v = 1;
 		else if (opt[*i][i2] == 'h')
 			usage();
 		else
@@ -41,21 +41,23 @@ int		check_opt(t_ping *host_opt, char **opt, int *i)
 	return (0);
 }
 
-int		parser(t_ping *host_opt, int ac, char **av)
+int		parser(int ac, char **av)
 {
 	int i;
 	int a;
 
-	ft_bzero(host_opt, sizeof(*host_opt));
-	host_opt->ttl = DEFAULT_TTL;
+	ft_bzero(&ping_s, sizeof(ping_s));
+	ping_s.ttl = DEFAULT_TTL;
+	ping_s.timeout.tv_sec = 1;
+	ping_s.min = 50000000;
 	i = 0;
 	a = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
-			a = check_opt(host_opt, av, &i);
-		else if (!host_opt->host)
-			host_opt->host = av[i];
+			a = check_opt(av, &i);
+		else if (!ping_s.host)
+			ping_s.host = av[i];
 		else
 			return (0);
 		if (a)
