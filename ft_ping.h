@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 20:47:40 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/11/01 19:17:13 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:59:09 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct		s_ping
 {
 	int					v;
 	int					ttl;
+	int					c;
+	float				i;
 	struct timeval		timeout;
 	struct sockaddr		*sock_addr;
 	char				ip[INET_ADDRSTRLEN + 1];

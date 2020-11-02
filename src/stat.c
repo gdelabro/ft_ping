@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:42:30 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/11/01 19:36:54 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:25:24 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	calc_stat(void)
 {
 	size_t t;
+	size_t mdev;
 
 	t = diff_time(ping_s.t1, ping_s.t2);
 	if (t <= ping_s.min)
@@ -22,6 +23,11 @@ void	calc_stat(void)
 	if (t >= ping_s.max)
 		ping_s.max = t;
 	ping_s.avg += t;
+
+	mdev = ping_s.avg / ping_s.received;
+	mdev = (t > mdev ? t - mdev : mdev - t);
+	mdev += ping_s.mdev * (ping_s.received - 1);
+	ping_s.mdev = mdev / ping_s.received;
 }
 
 void	statistics(void)

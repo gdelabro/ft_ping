@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 17:34:41 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/11/01 19:38:03 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/02 18:20:20 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			ping(void)
 	setsockopt(ping_s.sockfd, SOL_SOCKET, SO_RCVTIMEO,
 			&ping_s.timeout, sizeof(ping_s.timeout));
 	ping_s.start = get_time_now();
-	while (1)
+	while (ping_s.ping_loop < ping_s.c || !ping_s.c)
 	{
 		ping_s.ping_loop++;
 		creat_packet(ping);
@@ -82,6 +82,7 @@ int			ping(void)
 		printf("64 bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
 			ping_s.host, ping_s.ip, ping_s.ping_loop, ping_s.ttl,
 				(float)diff_time(ping_s.t1, ping_s.t2) / 1000);
-		usleep(1000000);
+		usleep(1000000 * (int)(ping_s.i * 1000) / 1000);
 	}
+	end_of_ping(0);
 }

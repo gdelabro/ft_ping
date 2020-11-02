@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:47:22 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/11/01 18:46:19 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:25:52 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	usage()
 {
-	printf("Usage: ./ft_ping [-hv] [-t ttl] [-W timeout]\
-destination\n");
+	printf("Usage: ./ft_ping [-hv] [-t ttl] [-W timeout] [-c count] \
+[-i interval] destination\n");
 	exit(2);
 }
 
@@ -25,17 +25,17 @@ int		main(int ac, char **av)
 		usage();
 	if ((ping_s.sockfd = socket(PF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0)
 	{
-		printf("%s\n", strerror(errno));
 		printf("ft_ping: socket: Operation not permitted(you may want to sudo)\n");
 		exit(2);
 	}
 	if (!get_ipv4())
 	{
-		printf("ft_ping: %s: Name or service not known\n", av[1]);
+		printf("ft_ping: %s: Name or service not known\n", ping_s.host);
 		return (2);
 	}
 	printf("PING %s (%s) 56(84) bytes of data.\n", ping_s.host, ping_s.ip);
 	signal(SIGINT, &end_of_ping);
+	signal(SIGALRM, &end_of_ping);
 	ping();
 	return (0);
 }
