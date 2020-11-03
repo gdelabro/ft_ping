@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 23:27:28 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/11/02 18:24:56 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:57:52 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 int		check_opt2(char **opt, int *i)
 {
 	if (!ft_strcmp(opt[*i], "-i") && opt[*i + 1])
-		sscanf(opt[*i + 1], "%f", &ping_s.i);
+		sscanf(opt[*i + 1], "%f", &g_ping.i);
 	else if (!ft_strcmp(opt[*i], "-c") && opt[*i + 1])
-		ping_s.c = ft_atoi(opt[*i + 1]);
+		g_ping.c = ft_atoi(opt[*i + 1]);
 	else if (!ft_strcmp(opt[*i], "-t") && opt[*i + 1])
-		ping_s.ttl = ft_atoi(opt[*i + 1]);
+		g_ping.ttl = ft_atoi(opt[*i + 1]);
 	else if (!ft_strcmp(opt[*i], "-W") && opt[*i + 1])
-		ping_s.timeout.tv_sec = ft_atoi(opt[*i + 1]);
+		g_ping.timeout.tv_sec = ft_atoi(opt[*i + 1]);
 	else
 		return (1);
-	if (!ft_strcmp(opt[*i], "-c") && ping_s.c <= 0)
+	if (!ft_strcmp(opt[*i], "-c") && g_ping.c <= 0)
 	{
 		printf("ft_ping: bad number of packet\n");
 		exit(2);
 	}
-	if (!ft_strcmp(opt[*i], "-i") && ping_s.i < 0.2)
+	if (!ft_strcmp(opt[*i], "-i") && g_ping.i < 0.2)
 	{
 		printf("ft_ping: cannot flood; minimal \
 interval allowed for user is 200ms\n");
@@ -49,9 +49,11 @@ int		check_opt(char **opt, int *i)
 	while (opt[*i][++i2])
 	{
 		if (opt[*i][i2] == 'v')
-			ping_s.v = 1;
+			g_ping.v = 1;
 		else if (opt[*i][i2] == 'h')
 			usage();
+		else if (opt[*i][i2] == 'q')
+			g_ping.q = 1;
 		else
 			return (opt[*i][i2]);
 	}
@@ -63,19 +65,19 @@ int		parser(int ac, char **av)
 	int i;
 	int a;
 
-	ft_bzero(&ping_s, sizeof(ping_s));
-	ping_s.ttl = DEFAULT_TTL;
-	ping_s.timeout.tv_sec = 1;
-	ping_s.min = 50000000;
-	ping_s.i = 1.0;
+	ft_bzero(&g_ping, sizeof(g_ping));
+	g_ping.ttl = DEFAULT_TTL;
+	g_ping.timeout.tv_sec = 1;
+	g_ping.min = 50000000;
+	g_ping.i = 1.0;
 	i = 0;
 	a = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
 			a = check_opt(av, &i);
-		else if (!ping_s.host)
-			ping_s.host = av[i];
+		else if (!g_ping.host)
+			g_ping.host = av[i];
 		else
 			return (0);
 		if (a)
@@ -84,5 +86,5 @@ int		parser(int ac, char **av)
 			return (0);
 		}
 	}
-	return (ping_s.host ? 1 : 0);
+	return (g_ping.host ? 1 : 0);
 }

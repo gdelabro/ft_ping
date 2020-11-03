@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 20:47:40 by gdelabro          #+#    #+#             */
-/*   Updated: 2020/11/02 17:59:09 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/03 17:00:25 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,19 @@
 # define DEFAULT_TIMEOUT 1
 # define PACKET_SIZE 64
 
-//int					ping_loop;
-
-typedef struct		s_packet
+typedef struct			s_packet
 {
 	struct icmphdr		hdr;
 	char				msg[PACKET_SIZE - sizeof(struct icmphdr)];
-}					t_packet;
+}						t_packet;
 
-typedef struct		s_ping
+typedef struct			s_ping
 {
 	int					v;
 	int					ttl;
 	int					c;
 	float				i;
+	int					q;
 	struct timeval		timeout;
 	struct sockaddr		*sock_addr;
 	char				ip[INET_ADDRSTRLEN + 1];
@@ -65,21 +64,21 @@ typedef struct		s_ping
 	size_t				avg;
 	size_t				mdev;
 	int					ping_loop;
-}					t_ping;
+}						t_ping;
 
-t_ping				ping_s;
+t_ping					g_ping;
 
-int			parser(int ac, char **av);
-void		usage();
+int						parser(int ac, char **av);
+void					usage();
 
-int			diff_time(size_t t1, size_t t2);
-size_t		get_time_now(void);
+int						diff_time(size_t t1, size_t t2);
+size_t					get_time_now(void);
 
-int			get_ipv4();
+int						get_ipv4();
 
-int			ping();
-void		end_of_ping(int code);
-void		statistics();
-void		calc_stat();
+int						ping();
+void					end_of_ping(int code);
+void					statistics();
+void					calc_stat();
 
 #endif

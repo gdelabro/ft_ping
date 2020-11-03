@@ -6,7 +6,7 @@
 /*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 17:44:45 by gdelabro          #+#    #+#             */
-/*   Updated: 2017/05/17 14:18:19 by gdelabro         ###   ########.fr       */
+/*   Updated: 2020/11/03 16:54:00 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,21 @@
 # include <wchar.h>
 # include "libft/libft.h"
 
-# define cNONE			"\033[0m"
-# define cBOLD			"\033[1m"
-# define cBLACK			"\033[30m"
-# define cRED			"\033[31m"
-# define cRED_BOLD		"\033[31;1m"
-# define cGREEN			"\033[32;1m"
-# define cBROWN			"\033[33m"
-# define cYELLOW		"\033[38;5;226m"
-# define cBLUE			"\033[34m"
-# define cMAGENTA		"\033[35m"
-# define cCYAN			"\033[36;1m"
-# define cGRAY			"\033[37m"
-# define cORANGE		"\033[38;5;166m"
+# define CNONE			"\033[0m"
+# define CBOLD			"\033[1m"
+# define CBLACK			"\033[30m"
+# define CRED			"\033[31m"
+# define CRED_BOLD		"\033[31;1m"
+# define CGREEN			"\033[32;1m"
+# define CBROWN			"\033[33m"
+# define CYELLOW		"\033[38;5;226m"
+# define CBLUE			"\033[34m"
+# define CMAGENTA		"\033[35m"
+# define CCYAN			"\033[36;1m"
+# define CGRAY			"\033[37m"
+# define CORANGE		"\033[38;5;166m"
 # define DEV_C			"\033[43;34m"
 # define DEV_B			"\033[46;34m"
-# define ABS(x) ((x) < 0 ? - (x) : (x))
 
 typedef struct			s_pf
 {
